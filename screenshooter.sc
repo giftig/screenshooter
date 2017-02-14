@@ -71,7 +71,7 @@ private class Screenshot(image: BufferedImage, cb: BufferedImage => Unit) extend
   cursor = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR)
 
   reactions += {
-    case KeyPressed(_, Key.Escape, _, _) => sys.exit(0)
+    case KeyPressed(_, Key.Escape, _, _) => sys.exit(0)  // FIXME: Never triggered
     case MousePressed(_, point, mods, _, _) => {
       from = Some(point)
     }
@@ -85,7 +85,6 @@ private class Screenshot(image: BufferedImage, cb: BufferedImage => Unit) extend
         case _ => Console.err.println("WAR: Mouse released without to and from being set")
       }
     }
-    case e => println(s"Unexpected event: $e")
   }
 
   override def paintComponent(g: Graphics2D): Unit = {
@@ -127,10 +126,10 @@ private class Screenshotter(screenshot: BufferedImage) extends SimpleSwingApplic
     sys.exit(0)
   }
 
-  def top = new MainFrame {
-    val mainPanel = new Screenshot(screenshot, saveAndExit)
-    mainPanel.preferredSize = screenDimensions
+  val mainPanel = new Screenshot(screenshot, saveAndExit)
+  mainPanel.preferredSize = screenDimensions
 
+  def top = new MainFrame {
     // Go fullscreen
     peer.setUndecorated(true)
     val dev = GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice
