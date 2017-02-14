@@ -15,11 +15,11 @@ import java.awt.{
 }
 import java.awt.image.BufferedImage
 import java.io.File
-import java.util.{Date, UUID}
 import java.text.SimpleDateFormat
+import java.util.{Date, UUID}
 import javax.imageio.ImageIO
 import scala.swing._
-import scala.swing.event.{Key, KeyPressed, MouseDragged, MousePressed, MouseReleased}
+import scala.swing.event._
 
 private val translucentColour = new Color(0, 0, 0, 0xbb)
 private val borderColour = new Color(0xff, 0xff, 0xff)
@@ -63,11 +63,12 @@ private def screenshotDest: File = {
   new File(rootDir, s"screenshot_${now}_$id.png")
 }
 
-private class Screenshot(image: BufferedImage, cb: BufferedImage => Unit) extends Panel {
+private class Screenshot(image: BufferedImage, cb: BufferedImage => Unit) extends Component {
   private var from: Option[Point] = None
   private var to: Option[Point] = None
 
   listenTo(mouse.clicks, mouse.moves, keys)
+  focusable = true
   cursor = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR)
 
   reactions += {
@@ -126,7 +127,7 @@ private class Screenshotter(screenshot: BufferedImage) extends SimpleSwingApplic
     sys.exit(0)
   }
 
-  val mainPanel = new Screenshot(screenshot, saveAndExit)
+  private val mainPanel = new Screenshot(screenshot, saveAndExit)
   mainPanel.preferredSize = screenDimensions
 
   def top = new MainFrame {
