@@ -13,6 +13,7 @@ import java.awt.{
   Robot,
   Toolkit => AwtToolkit
 }
+import java.awt.geom.AffineTransform
 import java.awt.image.BufferedImage
 import java.io.File
 import java.text.SimpleDateFormat
@@ -89,8 +90,7 @@ private class Screenshot(image: BufferedImage, cb: BufferedImage => Unit) extend
   }
 
   override def paintComponent(g: Graphics2D): Unit = {
-    g.clearRect(0, 0, size.width, size.height)
-    g.drawImage(image, 0, 0, null)
+    g.drawRenderedImage(image, new AffineTransform())
 
     (from, to) match {
       case (Some(fromPoint), Some(toPoint)) => {
