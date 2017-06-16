@@ -1,3 +1,7 @@
 *.swp
 *.swo
 *.class
+
+/lib_managed
+/project/target
+/target
