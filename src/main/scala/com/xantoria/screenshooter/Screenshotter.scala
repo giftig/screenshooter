@@ -28,15 +28,20 @@ class Screenshotter(
 
   mainPanel.preferredSize = Utils.screenDimensions
 
-  def top = new MainFrame {
+  def top = {
+    val f = new MainFrame
+    val peer = f.peer
+
     // Go fullscreen
     peer.setUndecorated(true)
-    val dev = GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice
+    val dev = peer.getGraphicsConfiguration.getDevice
     if (dev.isFullScreenSupported) {
       dev.setFullScreenWindow(peer)
     }
 
-    title = "Screenshotter"
-    contents = mainPanel
+    f.title = "Screenshotter"
+    f.contents = mainPanel
+
+    f
   }
 }
