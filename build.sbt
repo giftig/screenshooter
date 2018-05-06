@@ -1,6 +1,6 @@
 lazy val root = (project in file(".")).settings(
   name := "Screenshooter",
-  organization := "org.xantoria",
+  organization := "com.xantoria",
   version := "0.0.1-SNAPSHOT",
   scalaVersion := "2.12.1",
   mainClass in Compile := Some("com.xantoria.screenshooter.Main"),

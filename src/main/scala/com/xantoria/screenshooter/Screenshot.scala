@@ -19,7 +19,7 @@ class Screenshot(image: BufferedImage, cb: BufferedImage => Unit) extends Compon
   cursor = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR)
 
   reactions += {
-    case KeyPressed(_, Key.Escape, _, _) => sys.exit(0)  // FIXME: Never triggered
+    case KeyPressed(_, Key.Escape, _, _) => sys.exit(0)
     case MousePressed(_, point, mods, _, _) => {
       from = Some(point)
     }
@@ -59,7 +59,7 @@ class Screenshot(image: BufferedImage, cb: BufferedImage => Unit) extends Compon
   }
 
   def commit(from: Point, to: Point): Unit = {
-    println("Cropping and commiting image...")
+    println("Cropping and committing image...")
     val rect = Utils.findBounds(from, to)
     val cropped = image.getSubimage(rect.x, rect.y, rect.width, rect.height)
     cb(cropped)
